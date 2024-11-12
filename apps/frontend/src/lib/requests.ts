@@ -1,6 +1,7 @@
 import { HTTP_SERVER_URL } from "@repo/lib/config";
 import {
   CreateSpaceSchema,
+  JoinSpaceSchema,
   LogInSchema,
   SignUpSchema,
 } from "@repo/lib/zodTypes";
@@ -50,5 +51,25 @@ export async function getSpaceData(spaceId: string) {
     .get(`${HTTP_SERVER_URL}/api/v1/space/${spaceId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     })
+    .then((res) => res.data);
+}
+
+export async function deleteSpace({ spaceId }: { spaceId: string }) {
+  return axios
+    .delete(`${HTTP_SERVER_URL}/api/v1/space/${spaceId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
+    .then((res) => res.data);
+}
+
+export async function postJoinSpace(body: z.infer<typeof JoinSpaceSchema>) {
+  return axios
+    .post(
+      body.inviteURL,
+      {},
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    )
     .then((res) => res.data);
 }

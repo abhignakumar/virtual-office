@@ -7,6 +7,7 @@ import { getSpaces } from "@/lib/requests";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import { CreateSpace } from "./CreateSpace";
+import { JoinSpace } from "./JoinSpace";
 
 export const DashboardPage = () => {
   const navigate = useNavigate();
@@ -34,7 +35,10 @@ export const DashboardPage = () => {
           <div className="font-semibold text-lg text-neutral-800">
             My Spaces
           </div>
-          <CreateSpace />
+          <div className="space-x-3">
+            <JoinSpace />
+            <CreateSpace />
+          </div>
         </div>
         {isLoading ? (
           <div className="flex justify-center items-center p-3">

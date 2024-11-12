@@ -4,7 +4,7 @@ import { Loader } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import { OutGoingMessage } from "@repo/lib/types";
+import { OutGoingMessage, UserData } from "@repo/lib/types";
 import { CELL_SIZE } from "@repo/lib/config";
 
 const CANVAS_WIDTH = 1100;
@@ -19,6 +19,7 @@ interface UserPosition {
 
 interface OtherUser {
   userId: string;
+  userData: UserData | null;
   locationX: number;
   locationY: number;
 }
@@ -50,6 +51,7 @@ export const SpaceCanvas = () => {
   );
 
   const [userId, setUserId] = useState<String>();
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [isJoined, setIsJoined] = useState<Boolean>(false);
 
   const { data, isLoading, error } = useQuery({
@@ -91,7 +93,7 @@ export const SpaceCanvas = () => {
     });
 
     // Draw user as a circle with a name tag
-    context.fillStyle = "blue";
+    context.fillStyle = userData?.avatar.hexColor || "blue";
     context.beginPath();
     context.arc(
       userPosition?.x! * CELL_SIZE + CELL_SIZE / 2,
@@ -112,7 +114,7 @@ export const SpaceCanvas = () => {
 
     // Draw other users as a circle with a name tag
     otherUsers?.forEach((otherUser) => {
-      context.fillStyle = "red";
+      context.fillStyle = otherUser.userData?.avatar.hexColor || "red";
       context.beginPath();
       context.arc(
         otherUser.locationX * CELL_SIZE + CELL_SIZE / 2,
@@ -126,7 +128,7 @@ export const SpaceCanvas = () => {
       context.fillStyle = "black";
       context.textAlign = "center";
       context.fillText(
-        "Other",
+        otherUser.userData?.name || "Other",
         otherUser.locationX * CELL_SIZE + CELL_SIZE / 2,
         otherUser.locationY * CELL_SIZE - 5
       );
@@ -179,6 +181,7 @@ export const SpaceCanvas = () => {
             x: jsonMsg.payload.locationX,
             y: jsonMsg.payload.locationY,
           });
+          setUserData(jsonMsg.payload.userData);
           setOtherUsers(jsonMsg.payload.otherUsers);
           break;
         case "joined":

@@ -50,16 +50,46 @@ spaceRouter.delete("/:spaceId", async (req, res) => {
     return;
   }
   try {
-    await prisma.space.delete({
+    const space = await prisma.space.findFirst({
       where: {
         id: spaceId,
-        creatorUserId: req.userId,
       },
     });
-    res.json({
-      message: "Space deleted.",
-    });
-    return;
+    if (!space) {
+      res.status(400).json({
+        message: "Space does not exist",
+      });
+      return;
+    }
+    if (space.creatorUserId === req.userId) {
+      await prisma.space.delete({
+        where: {
+          id: spaceId,
+          creatorUserId: req.userId,
+        },
+      });
+      res.json({
+        message: "Space deleted.",
+      });
+      return;
+    } else {
+      const space = await prisma.space.update({
+        where: {
+          id: spaceId,
+        },
+        data: {
+          user: {
+            disconnect: {
+              id: req.userId,
+            },
+          },
+        },
+      });
+      res.json({
+        message: "Space exited.",
+      });
+      return;
+    }
   } catch (error) {
     res.status(400).json({
       message: "Failed to delete space (or) Database error.",
@@ -136,7 +166,7 @@ spaceRouter.get("/:spaceId", async (req, res) => {
   }
 });
 
-spaceRouter.get("/invite/:spaceId", async (req, res) => {
+spaceRouter.post("/invite/:spaceId", async (req, res) => {
   const spaceId = req.params.spaceId;
   if (!spaceId) {
     res.status(400).json({

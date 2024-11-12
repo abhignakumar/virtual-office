@@ -17,6 +17,10 @@ export const CreateSpaceSchema = z.object({
   mapId: z.string().min(1, "Required"),
 });
 
+export const JoinSpaceSchema = z.object({
+  inviteURL: z.string().min(1, "Required"),
+});
+
 const IncomingMessageJoin = z.object({
   type: z.literal("join"),
   payload: z.object({

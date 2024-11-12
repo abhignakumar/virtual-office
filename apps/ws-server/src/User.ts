@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "@repo/lib/config";
-import { OutGoingMessage } from "@repo/lib/types";
+import { HTTP_SERVER_URL, JWT_SECRET } from "@repo/lib/config";
+import { OutGoingMessage, UserData } from "@repo/lib/types";
 import { SpaceManager } from "./SpaceManager";
 import { GameEngine } from "./GameEngine";
 
@@ -12,6 +12,7 @@ export class User {
   public id;
   public locationX;
   public locationY;
+  public userData: UserData | null = null;
 
   constructor(ws: WebSocket) {
     this.ws = ws;
@@ -33,7 +34,14 @@ export class User {
               const decoded = jwt.verify(
                 jsonData.payload.token,
                 JWT_SECRET
-              ) as string;
+              ) as { userId: string };
+              const response = await fetch(`${HTTP_SERVER_URL}/api/v1/user`, {
+                headers: {
+                  Authorization: `Bearer ${jsonData.payload.token}`,
+                },
+              });
+              if (response.status === 200)
+                this.userData = (await response.json()).user;
               this.spaceId = jsonData.payload.spaceId;
               this.mapId = jsonData.payload.mapId;
               SpaceManager.getInstance().addSpaceUser(
@@ -56,6 +64,7 @@ export class User {
                 .map((u) => {
                   return {
                     userId: u.id,
+                    userData: u.userData,
                     locationX: u.locationX,
                     locationY: u.locationY,
                   };
@@ -65,6 +74,7 @@ export class User {
                 type: "join_accepted",
                 payload: {
                   userId: this.id,
+                  userData: this.userData,
                   locationX: this.locationX,
                   locationY: this.locationY,
                   otherUsers: otherUsers,
@@ -74,6 +84,7 @@ export class User {
                 type: "joined",
                 payload: {
                   userId: this.id,
+                  userData: this.userData,
                   locationX: this.locationX,
                   locationY: this.locationY,
                 },

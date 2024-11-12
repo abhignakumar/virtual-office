@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export const NavBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,6 +31,7 @@ export const NavBar = () => {
               onClick={() => {
                 localStorage.removeItem("token");
                 setIsAuthenticated(false);
+                toast.success("Logged out");
               }}
             >
               <LogOut />
