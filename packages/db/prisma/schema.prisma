@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String  @id @default(uuid())
+  name          String
+  email         String  @unique
+  password      String
+  avatarId      String
+  avatar        Avatar  @relation(fields: [avatarId], references: [id])
+  spaces        Space[]
+}
+
+model Avatar {
+  id          String  @id  @default(uuid())
+  hexColor    String
+  users       User[]
+}
+
+model Map {
+  id                  String  @id  @default(uuid())
+  name                String
+  width               Int
+  height              Int
+  elementPositions    MapElementPosition[]
+  spaces              Space[]
+}
+
+model Element {
+  id              String  @id  @default(uuid())
+  width           Int
+  height          Int
+  hexColor        String
+  canUserOverlap  Boolean
+  maps            MapElementPosition[]
+}
+
+model MapElementPosition {
+  id          String    @id  @default(uuid())
+  mapId       String
+  elementId   String
+  locationX   Int
+  locationY   Int
+  map         Map       @relation(fields: [mapId], references: [id])
+  element     Element   @relation(fields: [elementId], references: [id])
+}
+
+model Space {
+  id                 String    @id  @default(uuid())
+  name               String
+  creatorUserId      String
+  mapId              String
+  createdAt          DateTime  @default(now())
+  user               User[]    
+  map                Map       @relation(fields: [mapId], references: [id])
+}
