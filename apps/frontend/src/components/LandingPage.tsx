@@ -1,30 +1,3 @@
-// import { Link } from "react-router-dom";
-// import { NavBar } from "./NavBar";
-// import { Button } from "./ui/button";
-// import { ArrowRight } from "lucide-react";
-
-// export const LandingPage = () => {
-//   return (
-//     <div className="min-h-screen flex flex-col bg-blue-100">
-//       <NavBar />
-//       <div className="flex flex-col items-center">
-//         <h1 className="mt-40 font-bold text-slate-800 text-6xl max-w-screen-lg text-center">
-//           Create a office and join where ever you are from all around the world
-//         </h1>
-//         <h2 className="mt-6 font-semibold text-slate-600 text-2xl max-w-screen-lg text-center">
-//           Trail and check it out.
-//         </h2>
-//         <Button asChild className="mt-6 group">
-//           <Link to={"/login"}>
-//             <ArrowRight className="group-hover:translate-x-1 transition-all" />
-//             <span>Get Started</span>
-//           </Link>
-//         </Button>
-//       </div>
-//     </div>
-//   );
-// };
-
 import { Link } from "react-router-dom";
 import { NavBar } from "./NavBar";
 import { Button } from "./ui/button";
@@ -33,10 +6,7 @@ import { ArrowRight } from "lucide-react";
 export const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-100 to-indigo-300 flex flex-col">
-      {/* Navbar */}
       <NavBar />
-
-      {/* Main Content */}
       <div className="flex flex-col items-center justify-center text-center py-24 px-6 sm:px-12 lg:px-24">
         <h1 className="text-4xl font-semibold text-gray-900 mb-6 max-w-3xl leading-tight">
           Create Your Virtual Office and Connect with Colleagues Worldwide
@@ -46,7 +16,6 @@ export const LandingPage = () => {
           from anywhere!
         </h2>
 
-        {/* Call to Action Button */}
         <Button asChild className="group mt-6">
           <Link
             to="/login"
@@ -57,9 +26,7 @@ export const LandingPage = () => {
           </Link>
         </Button>
 
-        {/* Modern Design Elements */}
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 px-4 sm:px-12 md:px-24">
-          {/* Feature 1 */}
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-105">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">
               Seamless Collaboration
@@ -70,7 +37,6 @@ export const LandingPage = () => {
             </p>
           </div>
 
-          {/* Feature 2 */}
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-105">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">
               Easy Setup
@@ -81,7 +47,6 @@ export const LandingPage = () => {
             </p>
           </div>
 
-          {/* Feature 3 */}
           <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-105">
             <h3 className="text-xl font-semibold text-gray-900 mb-4">
               Global Connectivity
@@ -94,7 +59,6 @@ export const LandingPage = () => {
         </div>
       </div>
 
-      {/* Background Image Section */}
       <div
         className="relative w-full bg-cover bg-center bg-no-repeat h-[400px]"
         style={{ backgroundImage: 'url("/images/virtual-office-bg.jpg")' }}
@@ -106,7 +70,6 @@ export const LandingPage = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="w-full py-8 bg-gray-900 text-center text-gray-100">
         <p className="text-sm">
           &copy; 2025 Virtual Office. All rights reserved.
