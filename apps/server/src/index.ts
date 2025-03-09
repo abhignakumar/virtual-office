@@ -1,6 +1,7 @@
 import express from "express";
 import v1Router from "./routers/v1/v1Router";
 import cors from "cors";
+require("dotenv").config();
 
 const PORT = 3000;
 const app = express();

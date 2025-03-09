@@ -1,6 +1,6 @@
+require("dotenv").config();
 import { WebSocket } from "ws";
 import jwt from "jsonwebtoken";
-import { HTTP_SERVER_URL, JWT_SECRET } from "@repo/lib/config";
 import { OutGoingMessage, UserData } from "@repo/lib/types";
 import { SpaceManager } from "./SpaceManager";
 import { GameEngine } from "./GameEngine";
@@ -33,13 +33,16 @@ export class User {
             try {
               const decoded = jwt.verify(
                 jsonData.payload.token,
-                JWT_SECRET
+                process.env.JWT_SECRET!
               ) as { userId: string };
-              const response = await fetch(`${HTTP_SERVER_URL}/api/v1/user`, {
-                headers: {
-                  Authorization: `Bearer ${jsonData.payload.token}`,
-                },
-              });
+              const response = await fetch(
+                `${process.env.HTTP_SERVER_URL}/api/v1/user`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${jsonData.payload.token}`,
+                  },
+                }
+              );
               if (response.status === 200)
                 this.userData = (await response.json()).user;
               this.spaceId = jsonData.payload.spaceId;

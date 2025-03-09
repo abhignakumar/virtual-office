@@ -1,4 +1,3 @@
-import { HTTP_SERVER_URL } from "@repo/lib/config";
 import { SpaceManager } from "./SpaceManager";
 import { MapData } from "@repo/lib/types";
 
@@ -81,7 +80,9 @@ export class GameEngine {
   }
 
   public async fetchMapAndSave(mapId: string) {
-    const response = await fetch(`${HTTP_SERVER_URL}/api/v1/map/${mapId}`);
+    const response = await fetch(
+      `${process.env.HTTP_SERVER_URL}/api/v1/map/${mapId}`
+    );
     if (response.status !== 200) return;
     const map = await response.json();
     this.maps.push(map);

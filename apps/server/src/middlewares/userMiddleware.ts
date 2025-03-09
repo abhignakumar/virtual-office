@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { JWT_SECRET } from "@repo/lib/config";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 declare global {
   namespace Express {
@@ -31,7 +30,9 @@ export function userMiddleware(
     return;
   }
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+      userId: string;
+    };
     req.userId = decoded.userId;
     next();
   } catch (error) {

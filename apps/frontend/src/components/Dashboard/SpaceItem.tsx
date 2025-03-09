@@ -12,7 +12,6 @@ import { Ellipsis, Link, Trash } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteSpace } from "@/lib/requests";
 import { toast } from "sonner";
-import { HTTP_SERVER_URL } from "@repo/lib/config";
 
 interface SpaceItemProps {
   id: string;
@@ -61,7 +60,7 @@ export const SpaceItem = ({ id, name, createdAt }: SpaceItemProps) => {
               onClick={(e) => {
                 e.stopPropagation();
                 navigator.clipboard.writeText(
-                  `${HTTP_SERVER_URL}/api/v1/space/invite/${id}`
+                  `${import.meta.env.VITE_HTTP_SERVER_URL}/api/v1/space/invite/${id}`
                 );
                 toast.success("Copied to Clipboard");
               }}

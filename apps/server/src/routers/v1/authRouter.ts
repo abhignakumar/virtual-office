@@ -2,7 +2,6 @@ import { Router } from "express";
 import { LogInSchema, SignUpSchema } from "@repo/lib/zodTypes";
 import prisma from "@repo/db/client";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "@repo/lib/config";
 
 const authRouter = Router();
 
@@ -64,7 +63,7 @@ authRouter.post("/login", async (req, res) => {
       });
       return;
     }
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET);
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!);
     res.json({
       token,
     });
