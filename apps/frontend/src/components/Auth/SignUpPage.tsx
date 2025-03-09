@@ -26,6 +26,7 @@ import { AvatarsList } from "./AvatarsList";
 import { useMutation } from "@tanstack/react-query";
 import { postSignUp } from "@/lib/requests";
 import { toast } from "sonner";
+import { NavBar } from "../NavBar";
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -56,70 +57,76 @@ export const SignUpPage = () => {
   }
 
   return (
-    <div className="bg-slate-100 min-h-screen flex flex-col items-center justify-center">
-      <Card className="w-96">
-        <CardHeader>
-          <CardTitle>Sign Up</CardTitle>
-          <CardDescription>
-            Create a new account to use the application
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your full name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter email address" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <AvatarsList form={form} />
-              <Button className="w-full" type="submit">
-                Sign Up
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="text-sm text-slate-500 gap-x-1">
-          <div>Already have an account?</div>
-          <Link to={"/login"} className="underline text-blue-500">
-            Log In
-          </Link>
-        </CardFooter>
-      </Card>
+    <div>
+      <NavBar />
+      <div className="bg-slate-100 min-h-screen flex flex-col items-center justify-center">
+        <Card className="w-96">
+          <CardHeader>
+            <CardTitle>Sign Up</CardTitle>
+            <CardDescription>
+              Create a new account to use the application
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-3"
+              >
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your full name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter email address" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <AvatarsList form={form} />
+                <Button className="w-full" type="submit">
+                  Sign Up
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="text-sm text-slate-500 gap-x-1">
+            <div>Already have an account?</div>
+            <Link to={"/login"} className="underline text-blue-500">
+              Log In
+            </Link>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 };
