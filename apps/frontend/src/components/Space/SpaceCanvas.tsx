@@ -41,7 +41,7 @@ interface ElementPositionData {
 
 export const SpaceCanvas = () => {
   const params = useParams();
-  const WS_URL = "ws://localhost:8080";
+  const WS_URL = import.meta.env.VITE_WEBSOCKET_SERVER_URL;
   const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
     WS_URL,
     {
