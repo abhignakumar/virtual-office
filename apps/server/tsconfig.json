@@ -15,8 +15,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
-    "outDir": "api"
+    "outDir": "dist"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "api"]
+  "include": ["api"],
+  "exclude": ["node_modules", "dist"]
 }
