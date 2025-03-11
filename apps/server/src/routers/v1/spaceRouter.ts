@@ -177,6 +177,7 @@ spaceRouter.post("/invite/:spaceId", async (req, res) => {
   try {
     const userSpace = await prisma.space.findFirst({
       where: {
+        id: spaceId,
         user: {
           some: {
             id: req.userId,
